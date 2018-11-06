@@ -1,4 +1,4 @@
-function H = myhist3(img,bins)
+function H = myhist3slow(img,bins)
     % when computing indices add a small factor to avoid overflow
     % problemms
     % normalize the image so that it falls into the range of bins (if bins

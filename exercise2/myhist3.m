@@ -9,6 +9,7 @@ function H = myhist3(img,bins)
     % image
     for i = 1:size(img,1)
         for j = 1: size(img,2)
+            % indices of the bin
             R = idx(i,j,1);
             G = idx(i,j,2);
             B = idx(i,j,3);
