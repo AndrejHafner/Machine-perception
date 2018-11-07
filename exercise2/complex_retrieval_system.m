@@ -1,10 +1,25 @@
 close all;
 [histograms,files] = load_histogram_database('images',8);
-selected_hist = histograms(20,:);
 distances = zeros(1,120);
 dist_measures = {'l2','hellinger','chi2','intersect'};
 
-for j = 1:4
+% The dominant color is black
+hist_sum = sum(histograms);
+
+lambda = 0.05;
+% Calculate the weights
+weights = exp(-lambda * hist_sum);
+
+plot(1:512,weights,1:512,hist_sum / sum(hist_sum(:)));
+
+for i = 1:120
+    histograms(i,:) = histograms(i,:) .* weights;
+end
+
+selected_hist = histograms(20,:);
+
+
+for j = 2:3
     % Calculate the distances
     for i = 1:120
         distances(1,i) = compare_histograms(selected_hist,histograms(i,:),char(dist_measures(:,j)));
@@ -40,22 +55,4 @@ for j = 1:4
         
         distances(1,idx) = 1;
     end
-    
-    
 end
-
-% Answer: 
-% I think the best distance is Hellinger distance, because the distance
-% from the object 20 to the object that is not 20-rotated is the biggest of
-% all. This means that the Hellinger distance is the best at distiguishing
-% the given object from the objects which are not it-rotated. This doesn't
-% change when there are more bins, but it does take more time for the
-% operation to finish.
-
-
-
-
-
-
-
-

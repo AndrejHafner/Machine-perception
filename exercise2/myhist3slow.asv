@@ -3,13 +3,15 @@ function H = myhist3slow(img,bins)
     % problemms
     % normalize the image so that it falls into the range of bins (if bins
     % is 8, then values are between 0 and 8, then floor all down and add 1
-    idx = floor(double(img) * bins / (255 + 1e-5)) + 1;
+    idx_n = floor(double(img) * bins / (255 + 1e-5)) + 1;
+    
+    idx = reshape(idx,
+    
     H = zeros(bins,bins,bins);
     % increment the appropriate cell of the H(R,G,B) fror each pixel in the
     % image
     for i = 1:size(img,1)
         for j = 1: size(img,2)
-            % indices of the bin
             R = idx(i,j,1);
             G = idx(i,j,2);
             B = idx(i,j,3);
