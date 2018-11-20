@@ -1,8 +1,0 @@
-function M = immask(I,B)
-% I -> original 3 channel image
-% B -> binary mask of the image
-% M -> masked image
-
-M = cat(I(:,:,1).*B
-
-end
