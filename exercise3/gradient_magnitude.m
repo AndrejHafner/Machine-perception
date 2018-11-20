@@ -1,0 +1,1 @@
+function [Imag,Idir] = gradient_magnitude(I,sigma)
