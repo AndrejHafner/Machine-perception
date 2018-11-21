@@ -1,2 +1,0 @@
-function [histograms,files] = load_histogram_database(directory,bins)
-    files = cell(30*4,1); % us

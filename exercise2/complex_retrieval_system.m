@@ -19,7 +19,7 @@ end
 selected_hist = histograms(20,:);
 
 
-for j = 2:3
+for j = 1:4
     % Calculate the distances
     for i = 1:120
         distances(1,i) = compare_histograms(selected_hist,histograms(i,:),char(dist_measures(:,j)));
