@@ -1,9 +1,16 @@
-function [out_ro, out_theta] = hough_find_lines(Ie, bins_rho, bins_theta, threshold,max_lines)
+function [out_ro, out_theta] = hough_find_lines_angle(Ie,Idir,bins_rho, bins_theta, threshold,max_lines)
     %theta - angle
     %rho - distance from the origin
+    
+    % Normalize the Idir angles to [-pi/2,pi/2]
+    %Idir = ((Idir + pi/2) - 2*pi*floor(((Idir + pi/2) + pi)/(2*pi))) / 2;
+    Idir = Idir + pi/2;
+    tmp = mod(Idir+pi/2,pi);
+    Idir = tmp+pi*(Idir>0 & tmp==0) - pi/2;
+    
     [h,w] = size(Ie);
     D = sqrt(h^2 + w^2); % length of the diagonal of image
-    val_theta = (linspace(-90, 90, bins_theta) / 180) * pi; % values of theta re known
+    val_theta = (linspace(-90, 90, bins_theta) / 180) * pi ; % values of theta re known
     val_rho = linspace(-D, D, bins_rho); % values of rho
     A = zeros(bins_rho,bins_theta);
     
@@ -15,16 +22,27 @@ function [out_ro, out_theta] = hough_find_lines(Ie, bins_rho, bins_theta, thresh
         x = row_indices(i);
         y = col_indices(i);
         
-        rho = x * cos(val_theta) + y * sin(val_theta); 
-        bin_rho = round(((rho + D) / (2 * D)) * length(val_rho)); % 
-        for j = 1:bins_theta 
-            if bin_rho(j) > 0 && bin_rho(j) <= bins_rho
-                A(bin_rho(j), j) = A(bin_rho(j), j) + 1;
-            end
-        end
+        theta = Idir(x,y);
+        rho = x * cos(theta) + y * sin(theta); 
+        % round(((rho + D) / (2 * D))
+        %rho = round((rho + D) / (2*D));
+        [~,theta_bin_idx] = min(abs(val_theta - theta));
+        [~,rho_bin_idx] = min(abs(val_rho - rho));
+        
+           
+        A(rho_bin_idx, theta_bin_idx) = A(rho_bin_idx, theta_bin_idx) + 1;
+         
+        %bin_rho = round((rho + D) / (2 * D)); % 
+        %for j = 1:bins_theta 
+         %   if bin_rho(j) > 0 && bin_rho(j) <= bins_rho
+                %A(bin_rho, round(theta * bins_theta)) = A(rho, theta) + 1;
+           % end
+        %end
     end
+    
     figure;
     imagesc(A);
+    
     % Only keep the local maxima
     A = nonmaxima_suppression_box(A);
     

@@ -23,6 +23,6 @@ for i = 1 : length(theta)
         y2 = w;
         x2 = (rho(i) - y2 .* sin(theta(i))) ./ cos(theta(i));
     end
-    plot([x1, x2], [y1, y2], 'g');
+    plot([y1, y2], [x1, x2], 'g');
 end
 hold off;
