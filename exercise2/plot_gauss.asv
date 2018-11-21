@@ -1,7 +1,0 @@
-sig05 = gauss(0.5);
-sig1 = gauss(1);
-sig2 = gauss(2);
-sig3 = gauss(3);
-sig4 = gauss(4);
-
-plot(length(sig05),sig

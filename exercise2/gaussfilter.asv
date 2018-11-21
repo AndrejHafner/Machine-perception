@@ -1,2 +1,0 @@
-function C = gaussfilter(img,sigma)
-    ker = si
