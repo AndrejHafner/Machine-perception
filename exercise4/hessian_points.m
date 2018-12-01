@@ -1,7 +1,6 @@
-function I_hess = hessian_points(I,sigma)
+function [px,py,I_hess] = hessian_points(I,sigma,thresh)
 
-I = imgaussfilt(I,sigma);
-[dX,dY] = gradient(I);
-[ddX,ddXY] = gradient(dX);
-[ddY,~] = gradient(dY);
-I_hess = (sigma^4)*(ddX.*ddY - (ddXY).^2);
+[Ixx,Iyy,Ixy] = image_derivatives2(I,sigma);
+I_hess = (sigma^4)*(Ixx.*Iyy - (Ixy).^2);
+I_hess_peaks = nonmaxima_suppression_box(I_hess,thresh);
+[py,px] = find(I_hess_peaks > 0);

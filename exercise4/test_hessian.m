@@ -1,6 +1,11 @@
 close all;
-A = double(rgb2gray(imread('pier.jpg')));
-
-A_hess = hessian_points(A,2);
-
-imshow(A_hess);
+B = rgb2gray(imread('graf/graf1.png'));
+A = double(B);
+[px,py,A_hess] = hessian_points(A,1,200);
+colormap gray;
+imagesc(A);
+figure;
+B = insertMarker(B,[px,py],'x','color','red','size',5);
+imshow(B);
+figure;
+imagesc(A_hess);
