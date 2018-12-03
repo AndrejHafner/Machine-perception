@@ -1,7 +1,7 @@
 function [Imag, Ilap] = features_maglap(I, sigma, bins)
 
     Imag = gradient_magnitude(I, sigma);
-    [imgDxx, imgDxy, imgDyy] = image_derivatives2(I, sigma);
+    [imgDxx, imgDyy, imgDxy] = image_derivatives2(I, sigma);
     Ilap = imgDxx + imgDyy;
 
     Imag(Imag > 100) = 100;
