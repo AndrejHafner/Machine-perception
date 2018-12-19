@@ -13,7 +13,7 @@ x2 = house_points(:,3:4)';
 x2(3,:) = 1;
 
 X = triangulate(x1,x2,cam_cab_left,cam_cab_right)
-
+grid on;
 
 subplot(1,3,1);
 imshow(hleft);
@@ -26,6 +26,6 @@ hold on
 plot(house_points(:,3),house_points(:,4),'r+');
 
 subplot(1,3,3);
-plot3(X(1,:),X(3,:),X(2,:), 'ro');
+show_triangulation(X)
 
 
