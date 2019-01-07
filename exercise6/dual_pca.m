@@ -2,7 +2,7 @@ function [U,mean_val] = dual_pca(A)
     A = double(A);
     
     % Compute direct PCA
-    mean_val = sum(A,2) / size(A,2)
+    mean_val = sum(A,2) / size(A,2);
     
     % Center data
     A_centered = A - mean_val;
